@@ -34,6 +34,8 @@ The Pi owns perception and high-level decisions (where's the ball, which way to 
 Custom 2-layer controller PCB designed from scratch in KiCad 9 (schematic + layout), organized into hierarchical sheets by subsystem.
 
 ![Block diagram](docs/images/block-diagram.png)
+
+![Power section](docs/images/power-section.png)
 ### Power (`Power.kicad_sch`)
 - **Input:** USB-C receptacle, with 5.1kΩ pull-down resistors on the CC1/CC2 lines so the port correctly advertises itself to a USB-C source as a 5V/default-current sink.
 - **Protection:** A resettable polyfuse (2A) guards the input against overcurrent/short circuits, and SMF5V0A TVS diodes clamp transient voltage spikes on the input.
@@ -41,24 +43,34 @@ Custom 2-layer controller PCB designed from scratch in KiCad 9 (schematic + layo
 - **Status indication:** Power-good LEDs on the 5V and 3.3V rails; test points (TP1–TP3) broken out for probing key rails during bring-up/debug.
 - Both 5V and 3.3V are distributed to the Raspberry Pi header, so the Pi is powered directly from the board rather than needing its own separate supply.
 
+![Motor Driver](docs/images/motor-driver-section.png)
+
 ### Motor Driver (`MotorDriver.kicad_sch`)
 - A single **TB6612FNG** dual H-bridge IC drives both DC motors (one chip, two independent channels — no need for two separate driver ICs).
 - The STM32 drives `AIN1/AIN2`/`BIN1/BIN2` for direction and `PWMA`/`PWMB` (from TIM1 CH1/CH2) for speed, with `STBY` used to enable/disable the driver in firmware.
 - Bulk capacitance (470 µF + 100 µF) sits close to the motor supply input to absorb the current spikes motors draw on startup/direction changes.
 - TVS diodes across the motor connector outputs suppress the inductive kickback/flyback transients DC motors generate when switching direction.
 
+![Sensors section](docs/images/sensors-section.png)
+
 ### Sensors (`Sensors.kicad_sch`)
 - **HC-SR04 ultrasonic:** `TRIG`/`ECHO` connect directly to the STM32 (PA0/PA1). Since the HC-SR04's echo pin outputs a 5V logic level and the STM32 is 3.3V-tolerant, a resistive divider (20kΩ/10kΩ) steps the echo signal down to a safe ~3.3V before it reaches the MCU pin.
 - **Quadrature encoders:** Separate 4-pin headers for the left and right motor encoders, each feeding an A/B channel pair into the STM32's hardware timer encoder inputs (TIM3 for one wheel, TIM4 for the other).
 - Small filtering capacitors (10 nF) on the encoder/sensor lines to help reject electrical noise from the nearby motors.
 
+![stm32 section](docs/images/stm32-section.png)
+
 ### MCU (`STM32.kicad_sch`)
 - STM32G431CBTx (Arm Cortex-M4, 170 MHz), with standard decoupling capacitors on all supply pins plus a bulk 4.7 µF cap.
 - BOOT0 and NRST have pull resistors for reliable reset/boot behavior; two push buttons (SW1/SW2) are broken out for reset and boot-mode selection during flashing/debug.
 
+![Raspberry pi section](docs/images/raspberry-pi-section.png)
+
 ### Raspberry Pi Interface (`RaspberryPi.kicad_sch`)
 - A 4-pin header carries 5V, 3.3V, and UART TX/RX between the board and the Raspberry Pi's GPIO header.
 - Series resistors (220Ω) on the UART lines add a layer of protection against miswiring/contention; no level shifting is needed since both the STM32 and Pi run 3.3V logic.
+
+![Debug section](docs/images/debug-section.png)
 
 ### Debug (`Debug.kicad_sch`)
 - 6-pin SWD header (SWDIO, SWCLK, NRST, 3V3, GND) for programming and debugging the STM32 with an ST-Link, independent of the USART2 link to the Pi.
