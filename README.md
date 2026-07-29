@@ -6,6 +6,24 @@ I designed the controller PCB from scratch in KiCad and wrote the embedded firmw
 
 **Skills demonstrated:** PCB design (KiCad) · embedded C / STM32 HAL · real-time control loops (PID) · analog/digital circuit design (power regulation, signal protection) · computer vision (OpenCV) · serial communication protocol design
 
+## Table of Contents
+
+- [Features](#features)
+- [System Architecture](#system-architecture)
+- [Hardware](#hardware)
+  - [Power](#power-powerkicad_sch)
+  - [Motor Driver](#motor-driver-motordriverkicad_sch)
+  - [Sensors](#sensors-sensorskicad_sch)
+  - [MCU](#mcu-stm32kicad_sch)
+  - [Raspberry Pi Interface](#raspberry-pi-interface-raspberrypikicad_sch)
+  - [Debug](#debug-debugkicad_sch)
+- [Firmware](#firmware-stm32-c--hal-stm32cubeide)
+- [Vision](#vision-raspberry-pi-python)
+- [Repository Structure](#repository-structure)
+- [Getting Started](#getting-started)
+- [Testing](#testing)
+- [Future Improvements](#future-improvements)
+
 ## Features
 
 - Real-time red-ball tracking with Picamera2 + OpenCV
@@ -135,7 +153,7 @@ The HC-SR04's echo line isn't wired to a timer input-capture pin, so pulse width
 Run it with:
 ```bash
 pip install picamera2 opencv-python pyserial numpy
-python3 ball_tracker.py
+python3 ball_tracking.py
 ```
 Requires UART enabled via `raspi-config` (Interface Options → Serial Port) and, on Pi models where UART is routed through Bluetooth, `dtoverlay=disable-bt` in `/boot/firmware/config.txt`. Wiring: Pi GPIO14 (TX) → STM32 PA3 (RX), Pi GPIO15 (RX) → STM32 PA2 (TX), common ground — both sides are 3.3V logic, no level shifter needed.
 
