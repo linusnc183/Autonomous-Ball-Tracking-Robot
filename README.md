@@ -15,21 +15,7 @@ I designed the controller PCB from scratch in KiCad and wrote the embedded firmw
 - Ultrasonic obstacle sensing (HC-SR04)
 
 ## System Architecture
-
-
-```
-┌──────────────────────────┐        UART (115200)         ┌──────────────────────────────┐
-│       Raspberry Pi       │ ────────────────────────────▶│   STM32G431CBTx (custom PCB) │
-│  Picamera2 + OpenCV      │    single-char commands       │                              │
-│  red-ball detection /    │    F / B / L / R / S          │  50 Hz PID loop, quadrature  │
-│  centroid tracking       │                                │  encoders, TB6612FNG motor  │
-└──────────────────────────┘                                │  drivers, HC-SR04 ranging   │
-                                                              └──────────────────────────────┘
-                                                                     │           │
-                                                              ┌──────┘           └──────┐
-                                                         Left DC motor            Right DC motor
-                                                          + encoder                + encoder
-```
+![System architecture diagram](docs/images/system-architecture-diagram.png)
 
 **Why split the work this way:** the Raspberry Pi handles the computationally heavy, non-deterministic side — image processing, ball detection, high-level navigation decisions. The STM32 handles the deterministic, real-time side — PWM generation, encoder feedback, PID control, and motor safety. Keeping them separate means a slow camera frame can never disturb the timing of the motor control loop.
 
