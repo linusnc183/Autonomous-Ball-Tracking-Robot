@@ -7,6 +7,17 @@ I designed the controller PCB from scratch in KiCad and wrote the embedded firmw
 
 **Skills demonstrated:** PCB design (KiCad) · embedded C / STM32 HAL · real-time control loops (PID) · digital/analog circuit design (power regulation, signal protection) · computer vision (OpenCV) · serial communication protocol design
 
+## Features
+
+- Real-time red ball tracking using Picamera2 + OpenCV
+- Custom STM32G431 motor controller PCB
+- Closed-loop wheel velocity control using quadrature encoders
+- Independent left/right PID controllers
+- UART communication between Raspberry Pi and STM32
+- Motor safety timeout if communication is lost
+- Ultrasonic obstacle detection
+- Custom KiCad PCB design with protection circuitry
+
 ## System Architecture
 
 
@@ -26,6 +37,22 @@ I designed the controller PCB from scratch in KiCad and wrote the embedded firmw
 ```
 
 The Pi owns perception and high-level decisions (where's the ball, which way to turn); the STM32 owns real-time control (closing the velocity loop on each wheel and keeping the robot safe if the link drops).
+## Design Decisions
+
+### Raspberry Pi + STM32 split
+
+The Raspberry Pi handles computationally expensive tasks:
+- image processing
+- object detection
+- high-level navigation decisions
+
+The STM32 handles deterministic real-time tasks:
+- PWM generation
+- encoder feedback
+- PID control
+- motor safety
+
+This prevents camera processing delays from affecting motor control timing.
 
 ## Hardware
 
@@ -141,28 +168,99 @@ Requires UART enabled via `raspi-config` (Interface Options → Serial Port) and
 ## Repository Structure
 
 ```
-.
-├── Ball_Tracking_Robot_Controller.kicad_pro    # KiCad project
-├── Ball_Tracking_Robot_Controller.kicad_sch    # Root schematic
-├── Ball_Tracking_Robot_Controller.kicad_pcb    # PCB layout
-├── STM32.kicad_sch
-├── MotorDriver.kicad_sch
-├── Power.kicad_sch
-├── RaspberryPi.kicad_sch
-├── Sensors.kicad_sch
-├── Debug.kicad_sch
+Ball_Tracking_Robot/
 │
-├── firmware/                 # STM32 firmware (STM32CubeIDE, HAL)
-│   ├── main.c / main.h
-│   ├── motor.c / motor.h
-│   ├── encoder.c / encoder.h
-│   ├── pid.c / pid.h
-│   ├── uart_control.c / uart_control.h
-│   ├── ultrasonic.c / ultrasonic.h
-│   └── stm32g4xx_*.c/h        # HAL config, interrupt handlers, system files
+├── README.md
+├── .gitignore
 │
-└── vision/
-    └── ball_tracker.py        # Picamera2 + OpenCV red-ball tracker, sends commands over UART
+├── hardware/                         # Custom PCB design files
+│   │
+│   └── PCB/
+│       │
+│       ├── KiCad/
+│       │   ├── Ball_Tracking_Robot_Controller.kicad_pro
+│       │   ├── Ball_Tracking_Robot_Controller.kicad_sch
+│       │   ├── Ball_Tracking_Robot_Controller.kicad_pcb
+│       │   │
+│       │   ├── STM32.kicad_sch
+│       │   ├── Power.kicad_sch
+│       │   ├── MotorDriver.kicad_sch
+│       │   ├── Sensors.kicad_sch
+│       │   ├── RaspberryPi.kicad_sch
+│       │   ├── Debug.kicad_sch
+│       │   │
+│       │   └── fp-info-cache
+│       │
+│       │
+│       ├── Gerbers/                  # Manufacturing files
+│       │       ├── *.gbr
+│       │       └── *.drl
+│       │
+│       ├── BOM/
+│       │    └── Ball_Tracking_Robot_BOM.csv
+│       │   
+│       │
+│       └── schematic.png
+│
+│
+├── firmware/                         # STM32 embedded firmware
+│   │
+│   └── STM32CubeIDE/
+│       │
+│       ├── Core/
+│       │   │
+│       │   ├── Inc/
+│       │   │   ├── main.h
+│       │   │   ├── motor.h
+│       │   │   ├── encoder.h
+│       │   │   ├── pid.h
+│       │   │   ├── uart_control.h
+│       │   │   ├── ultrasonic.h
+│       │   │   ├── stm32g4xx_hal_conf.h
+│       │   │   └── stm32g4xx_it.h
+│       │   │
+│       │   └── Src/
+│       │       ├── main.c
+│       │       ├── motor.c
+│       │       ├── encoder.c
+│       │       ├── pid.c
+│       │       ├── uart_control.c
+│       │       ├── ultrasonic.c
+│       │       ├── stm32g4xx_hal_msp.c
+│       │       ├── stm32g4xx_it.c
+│       │       └── system_stm32g4xx.c
+│       │
+│       ├── Drivers/
+│       │   ├── CMSIS/
+│       │   └── STM32G4xx_HAL_Driver/
+│       │
+│       ├── STM32CubeMX/
+│       │   └── Ball_Tracking_Robot.ioc
+│       │
+│       ├── .project
+│       └── .cproject
+│       
+│ 
+│
+├── software/                         # Raspberry Pi software
+│   │
+│   └── RaspberryPi/
+│       │
+│       └── ball_tracking.py
+│
+│
+│
+│
+└── tests/                            # Hardware/software validation tests
+    │
+    ├── uart_test/
+    │   └── uart_test.py
+    │
+    ├── encoder_test/
+    │   └── encoder_test.c
+    │
+    └── motor_test/
+        └── motor_test.c
 ```
 
 ## Getting Started
@@ -178,3 +276,33 @@ Requires UART enabled via `raspi-config` (Interface Options → Serial Port) and
 
 ### Vision
 1. On the Raspberry Pi, install dependencies and run `vision/ball_tracker.py` (see the Vision section above for setup details).
+
+## Testing
+
+### Hardware Tests
+
+- 3.3V and 5V rail verification
+- UART communication test
+- Motor driver test
+- Encoder direction/count test
+- Ultrasonic ranging validation
+
+### Firmware Tests
+
+- PID response testing
+- Encoder speed measurement validation
+- UART disconnect failsafe test
+
+### Vision Tests
+
+- Red ball detection under different lighting
+- Ball loss recovery
+- Camera latency testing
+## Future Improvements
+
+- Replace single-character UART commands with packet-based communication
+- Add CRC error checking
+- Add IMU for orientation estimation
+- Implement autonomous navigation
+- Add wheel odometry and localization
+- Tune PID gains automatically
