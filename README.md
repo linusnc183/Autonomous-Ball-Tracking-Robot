@@ -136,7 +136,7 @@ The HC-SR04's echo line isn't wired to a timer input-capture pin, so pulse width
 
 ## Vision (Raspberry Pi, Python)
 
-`ball_tracker.py` captures frames with Picamera2, finds the ball with OpenCV, and streams drive commands to the STM32 over the same UART protocol the firmware implements.
+`ball_tracking.py` captures frames with Picamera2, finds the ball with OpenCV, and streams drive commands to the STM32 over the same UART protocol the firmware implements.
 
 **Detection:** Frames are converted to HSV and thresholded for red across two hue ranges (red wraps around hue 0/180 in OpenCV's HSV space), combined into one mask, then cleaned up with erosion/dilation to remove noise. The largest contour's minimum enclosing circle gives the ball's center and apparent radius.
 
@@ -188,7 +188,7 @@ Ball_Tracking_Robot/
 │
 ├── software/                          # Raspberry Pi vision code
 │   └── RaspberryPi/
-│       └── ball_tracker.py
+│       └── ball_tracking.py
 │
 ├── tests/                             # Hardware/firmware/vision validation
 │   ├── uart_test/
@@ -211,7 +211,7 @@ Ball_Tracking_Robot/
 3. Connect USART2 (PA2/PA3) to the Raspberry Pi's UART pins.
 
 ### Vision
-1. On the Raspberry Pi, install dependencies and run `software/RaspberryPi/ball_tracker.py` (see the [Vision](#vision-raspberry-pi-python) section above for setup details).
+1. On the Raspberry Pi, install dependencies and run `software/RaspberryPi/ball_tracking.py` (see the [Vision](#vision-raspberry-pi-python) section above for setup details).
 
 ## Testing
 
