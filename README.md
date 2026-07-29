@@ -141,28 +141,99 @@ Requires UART enabled via `raspi-config` (Interface Options → Serial Port) and
 ## Repository Structure
 
 ```
-.
-├── Ball_Tracking_Robot_Controller.kicad_pro    # KiCad project
-├── Ball_Tracking_Robot_Controller.kicad_sch    # Root schematic
-├── Ball_Tracking_Robot_Controller.kicad_pcb    # PCB layout
-├── STM32.kicad_sch
-├── MotorDriver.kicad_sch
-├── Power.kicad_sch
-├── RaspberryPi.kicad_sch
-├── Sensors.kicad_sch
-├── Debug.kicad_sch
+Ball_Tracking_Robot/
 │
-├── firmware/                 # STM32 firmware (STM32CubeIDE, HAL)
-│   ├── main.c / main.h
-│   ├── motor.c / motor.h
-│   ├── encoder.c / encoder.h
-│   ├── pid.c / pid.h
-│   ├── uart_control.c / uart_control.h
-│   ├── ultrasonic.c / ultrasonic.h
-│   └── stm32g4xx_*.c/h        # HAL config, interrupt handlers, system files
+├── README.md
+├── .gitignore
 │
-└── vision/
-    └── ball_tracker.py        # Picamera2 + OpenCV red-ball tracker, sends commands over UART
+├── hardware/                         # Custom PCB design files
+│   │
+│   └── PCB/
+│       │
+│       ├── KiCad/
+│       │   ├── Ball_Tracking_Robot_Controller.kicad_pro
+│       │   ├── Ball_Tracking_Robot_Controller.kicad_sch
+│       │   ├── Ball_Tracking_Robot_Controller.kicad_pcb
+│       │   │
+│       │   ├── STM32.kicad_sch
+│       │   ├── Power.kicad_sch
+│       │   ├── MotorDriver.kicad_sch
+│       │   ├── Sensors.kicad_sch
+│       │   ├── RaspberryPi.kicad_sch
+│       │   ├── Debug.kicad_sch
+│       │   │
+│       │   └── fp-info-cache
+│       │
+│       │
+│       ├── Gerbers/                  # Manufacturing files
+│       │       ├── *.gbr
+│       │       └── *.drl
+│       │
+│       ├── BOM/
+│       │    └── Ball_Tracking_Robot_BOM.csv
+│       │   
+│       │
+│       └── schematic.png
+│
+│
+├── firmware/                         # STM32 embedded firmware
+│   │
+│   └── STM32CubeIDE/
+│       │
+│       ├── Core/
+│       │   │
+│       │   ├── Inc/
+│       │   │   ├── main.h
+│       │   │   ├── motor.h
+│       │   │   ├── encoder.h
+│       │   │   ├── pid.h
+│       │   │   ├── uart_control.h
+│       │   │   ├── ultrasonic.h
+│       │   │   ├── stm32g4xx_hal_conf.h
+│       │   │   └── stm32g4xx_it.h
+│       │   │
+│       │   └── Src/
+│       │       ├── main.c
+│       │       ├── motor.c
+│       │       ├── encoder.c
+│       │       ├── pid.c
+│       │       ├── uart_control.c
+│       │       ├── ultrasonic.c
+│       │       ├── stm32g4xx_hal_msp.c
+│       │       ├── stm32g4xx_it.c
+│       │       └── system_stm32g4xx.c
+│       │
+│       ├── Drivers/
+│       │   ├── CMSIS/
+│       │   └── STM32G4xx_HAL_Driver/
+│       │
+│       ├── STM32CubeMX/
+│       │   └── Ball_Tracking_Robot.ioc
+│       │
+│       ├── .project
+│       └── .cproject
+│       
+│ 
+│
+├── software/                         # Raspberry Pi software
+│   │
+│   └── RaspberryPi/
+│       │
+│       └── ball_tracking.py
+│
+│
+│
+│
+└── tests/                            # Hardware/software validation tests
+    │
+    ├── uart_test/
+    │   └── uart_test.py
+    │
+    ├── encoder_test/
+    │   └── encoder_test.c
+    │
+    └── motor_test/
+        └── motor_test.c
 ```
 
 ## Getting Started
