@@ -1,108 +1,96 @@
 # Autonomous Ball Tracking Robot
 
-
 A two-wheeled robot that visually tracks and follows a red ball. A Raspberry Pi handles vision (Picamera2 + OpenCV) and sends drive commands over UART to a custom STM32-based motor controller PCB, which closes the loop with encoder feedback and PID.
 
 I designed the controller PCB from scratch in KiCad and wrote the embedded firmware in C (STM32CubeIDE, HAL).
 
-**Skills demonstrated:** PCB design (KiCad) · embedded C / STM32 HAL · real-time control loops (PID) · digital/analog circuit design (power regulation, signal protection) · computer vision (OpenCV) · serial communication protocol design
+**Skills demonstrated:** PCB design (KiCad) · embedded C / STM32 HAL · real-time control loops (PID) · analog/digital circuit design (power regulation, signal protection) · computer vision (OpenCV) · serial communication protocol design
 
 ## Features
 
-- Real-time red ball tracking using Picamera2 + OpenCV
-- Custom STM32G431 motor controller PCB
-- Closed-loop wheel velocity control using quadrature encoders
-- Independent left/right PID controllers
-- UART communication between Raspberry Pi and STM32
-- Motor safety timeout if communication is lost
-- Ultrasonic obstacle detection
-- Custom KiCad PCB design with protection circuitry
+- Real-time red-ball tracking with Picamera2 + OpenCV
+- Custom 2-layer STM32G431 motor controller PCB with protection circuitry
+- Closed-loop wheel velocity control via quadrature encoders + independent left/right PID
+- UART link between Raspberry Pi and STM32, with a motor-safety timeout if the link drops
+- Ultrasonic obstacle sensing (HC-SR04)
 
 ## System Architecture
 
 
-
 ```
-┌──────────────────────────┐        UART (115200)          ┌──────────────────────────────┐
-│       Raspberry Pi       │ ───────────────────────────▶ │   STM32G431CBTx (custom PCB) │
-│  Picamera2 + OpenCV      │   single-char commands       │                               │
-│  red-ball detection /    │   F / B / L / R / S          │  50 Hz PID loop, quadrature   │
-│  centroid tracking       │                              │  encoders, TB6612FNG motor    │
-└──────────────────────────┘                              │  drivers, HC-SR04 ranging     │
-                                                          └───────────────────────────────┘
+┌──────────────────────────┐        UART (115200)         ┌──────────────────────────────┐
+│       Raspberry Pi       │ ────────────────────────────▶│   STM32G431CBTx (custom PCB) │
+│  Picamera2 + OpenCV      │    single-char commands       │                              │
+│  red-ball detection /    │    F / B / L / R / S          │  50 Hz PID loop, quadrature  │
+│  centroid tracking       │                                │  encoders, TB6612FNG motor  │
+└──────────────────────────┘                                │  drivers, HC-SR04 ranging   │
+                                                              └──────────────────────────────┘
                                                                      │           │
                                                               ┌──────┘           └──────┐
                                                          Left DC motor            Right DC motor
                                                           + encoder                + encoder
 ```
 
-The Pi owns perception and high-level decisions (where's the ball, which way to turn); the STM32 owns real-time control (closing the velocity loop on each wheel and keeping the robot safe if the link drops).
-## Design Decisions
-
-### Raspberry Pi + STM32 split
-
-The Raspberry Pi handles computationally expensive tasks:
-- image processing
-- object detection
-- high-level navigation decisions
-
-The STM32 handles deterministic real-time tasks:
-- PWM generation
-- encoder feedback
-- PID control
-- motor safety
-
-This prevents camera processing delays from affecting motor control timing.
+**Why split the work this way:** the Raspberry Pi handles the computationally heavy, non-deterministic side — image processing, ball detection, high-level navigation decisions. The STM32 handles the deterministic, real-time side — PWM generation, encoder feedback, PID control, and motor safety. Keeping them separate means a slow camera frame can never disturb the timing of the motor control loop.
 
 ## Hardware
-
-![PCB 3D render](docs/images/pcb-3d-render.png)
 
 Custom 2-layer controller PCB designed from scratch in KiCad 9 (schematic + layout), organized into hierarchical sheets by subsystem.
 
 ![Block diagram](docs/images/block-diagram.png)
 
-![Power section](docs/images/power-section.png)
+
 ### Power (`Power.kicad_sch`)
-- **Input:** USB-C receptacle, with 5.1kΩ pull-down resistors on the CC1/CC2 lines so the port correctly advertises itself to a USB-C source as a 5V/default-current sink.
+
+![Power section](docs/images/power-section.png)
+
+- **Input:** USB-C receptacle, with 5.1 kΩ pull-down resistors on the CC1/CC2 lines so the port correctly advertises itself to a USB-C source as a 5V/default-current sink.
 - **Protection:** A resettable polyfuse (2A) guards the input against overcurrent/short circuits, and SMF5V0A TVS diodes clamp transient voltage spikes on the input.
-- **Regulation:** An AP2112K-3.3 LDO steps the 5V USB rail down to 3.3V for the STM32 and logic-level signals, bulk/decoupling caps (10 µF, 100 µF) on both rails.
+- **Regulation:** An AP2112K-3.3 LDO steps the 5V USB rail down to 3.3V for the STM32 and logic-level signals, with bulk/decoupling caps (10 µF, 100 µF) on both rails.
 - **Status indication:** Power-good LEDs on the 5V and 3.3V rails; test points (TP1–TP3) broken out for probing key rails during bring-up/debug.
 - Both 5V and 3.3V are distributed to the Raspberry Pi header, so the Pi is powered directly from the board rather than needing its own separate supply.
 
-![Motor Driver](docs/images/motor-driver-section.png)
-
 ### Motor Driver (`MotorDriver.kicad_sch`)
+
+![Motor driver section](docs/images/motor-driver-section.png)
+
 - A single **TB6612FNG** dual H-bridge IC drives both DC motors (one chip, two independent channels — no need for two separate driver ICs).
 - The STM32 drives `AIN1/AIN2`/`BIN1/BIN2` for direction and `PWMA`/`PWMB` (from TIM1 CH1/CH2) for speed, with `STBY` used to enable/disable the driver in firmware.
 - Bulk capacitance (470 µF + 100 µF) sits close to the motor supply input to absorb the current spikes motors draw on startup/direction changes.
 - TVS diodes across the motor connector outputs suppress the inductive kickback/flyback transients DC motors generate when switching direction.
 
+### Sensors (`Sensors.kicad_sch`)
+
 ![Sensors section](docs/images/sensors-section.png)
 
-### Sensors (`Sensors.kicad_sch`)
-- **HC-SR04 ultrasonic:** `TRIG`/`ECHO` connect directly to the STM32 (PA0/PA1). Since the HC-SR04's echo pin outputs a 5V logic level and the STM32 is 3.3V-tolerant, a resistive divider (20kΩ/10kΩ) steps the echo signal down to a safe ~3.3V before it reaches the MCU pin.
+- **HC-SR04 ultrasonic:** `TRIG`/`ECHO` connect directly to the STM32 (PA0/PA1). Since the HC-SR04's echo pin outputs a 5V logic level and the STM32 is 3.3V-tolerant, a resistive divider (20 kΩ/10 kΩ) steps the echo signal down to a safe ~3.3V before it reaches the MCU pin.
 - **Quadrature encoders:** Separate 4-pin headers for the left and right motor encoders, each feeding an A/B channel pair into the STM32's hardware timer encoder inputs (TIM3 for one wheel, TIM4 for the other).
-- Small filtering capacitors (10 nF) on the encoder/sensor lines to help reject electrical noise from the nearby motors.
-
-![stm32 section](docs/images/stm32-section.png)
+- Small filtering capacitors (10 nF) on the encoder/sensor lines help reject electrical noise from the nearby motors.
 
 ### MCU (`STM32.kicad_sch`)
+
+![STM32 section](docs/images/stm32-section.png)
+
 - STM32G431CBTx (Arm Cortex-M4, 170 MHz), with standard decoupling capacitors on all supply pins plus a bulk 4.7 µF cap.
 - BOOT0 and NRST have pull resistors for reliable reset/boot behavior; two push buttons (SW1/SW2) are broken out for reset and boot-mode selection during flashing/debug.
 
-![Raspberry pi section](docs/images/raspberry-pi-section.png)
-
 ### Raspberry Pi Interface (`RaspberryPi.kicad_sch`)
+
+![Raspberry Pi section](docs/images/raspberry-pi-section.png)
+
 - A 4-pin header carries 5V, 3.3V, and UART TX/RX between the board and the Raspberry Pi's GPIO header.
-- Series resistors (220Ω) on the UART lines add a layer of protection against miswiring/contention; no level shifting is needed since both the STM32 and Pi run 3.3V logic.
+- Series resistors (220 Ω) on the UART lines add a layer of protection against miswiring/contention; no level shifting is needed since both the STM32 and Pi run 3.3V logic.
+
+### Debug (`Debug.kicad_sch`)
 
 ![Debug section](docs/images/debug-section.png)
 
-### Debug (`Debug.kicad_sch`)
 - 6-pin SWD header (SWDIO, SWCLK, NRST, 3V3, GND) for programming and debugging the STM32 with an ST-Link, independent of the USART2 link to the Pi.
 
 **Key parts:** STM32G431CBTx · TB6612FNG motor driver · HC-SR04 ultrasonic sensor · 2x quadrature encoders · AP2112K-3.3 LDO · USB-C power input · SMF5V0A TVS protection
+
+![PCB layout](docs/images/pcb-layout.png)
+![PCB 3D render](docs/images/pcb-3d-render.png)
 
 ## Firmware (STM32, C / HAL, STM32CubeIDE)
 
@@ -169,140 +157,74 @@ Requires UART enabled via `raspi-config` (Interface Options → Serial Port) and
 
 ```
 Ball_Tracking_Robot/
-│
 ├── README.md
 ├── .gitignore
 │
-├── hardware/                         # Custom PCB design files
-│   │
+├── hardware/                          # Custom PCB design files
 │   └── PCB/
-│       │
 │       ├── KiCad/
 │       │   ├── Ball_Tracking_Robot_Controller.kicad_pro
 │       │   ├── Ball_Tracking_Robot_Controller.kicad_sch
 │       │   ├── Ball_Tracking_Robot_Controller.kicad_pcb
-│       │   │
 │       │   ├── STM32.kicad_sch
 │       │   ├── Power.kicad_sch
 │       │   ├── MotorDriver.kicad_sch
 │       │   ├── Sensors.kicad_sch
 │       │   ├── RaspberryPi.kicad_sch
-│       │   ├── Debug.kicad_sch
-│       │   │
-│       │   └── fp-info-cache
-│       │
-│       │
-│       ├── Gerbers/                  # Manufacturing files
-│       │       ├── *.gbr
-│       │       └── *.drl
-│       │
-│       ├── BOM/
-│       │    └── Ball_Tracking_Robot_BOM.csv
-│       │   
-│       │
-│       └── schematic.png
+│       │   └── Debug.kicad_sch
+│       ├── Gerbers/                   # Manufacturing files
+│       └── BOM/
 │
-│
-├── firmware/                         # STM32 embedded firmware
-│   │
+├── firmware/                          # STM32 embedded firmware (STM32CubeIDE project)
 │   └── STM32CubeIDE/
-│       │
 │       ├── Core/
-│       │   │
-│       │   ├── Inc/
-│       │   │   ├── main.h
-│       │   │   ├── motor.h
-│       │   │   ├── encoder.h
-│       │   │   ├── pid.h
-│       │   │   ├── uart_control.h
-│       │   │   ├── ultrasonic.h
-│       │   │   ├── stm32g4xx_hal_conf.h
-│       │   │   └── stm32g4xx_it.h
-│       │   │
-│       │   └── Src/
-│       │       ├── main.c
-│       │       ├── motor.c
-│       │       ├── encoder.c
-│       │       ├── pid.c
-│       │       ├── uart_control.c
-│       │       ├── ultrasonic.c
-│       │       ├── stm32g4xx_hal_msp.c
-│       │       ├── stm32g4xx_it.c
-│       │       └── system_stm32g4xx.c
-│       │
-│       ├── Drivers/
-│       │   ├── CMSIS/
-│       │   └── STM32G4xx_HAL_Driver/
-│       │
-│       ├── STM32CubeMX/
-│       │   └── Ball_Tracking_Robot.ioc
-│       │
-│       ├── .project
-│       └── .cproject
-│       
-│ 
+│       │   ├── Inc/                   # main.h, motor.h, encoder.h, pid.h,
+│       │   │                          # uart_control.h, ultrasonic.h, ...
+│       │   └── Src/                   # main.c, motor.c, encoder.c, pid.c,
+│       │                              # uart_control.c, ultrasonic.c, ...
+│       ├── Drivers/                   # CMSIS + STM32G4xx HAL
+│       └── STM32CubeMX/
+│           └── Ball_Tracking_Robot.ioc
 │
-├── software/                         # Raspberry Pi software
-│   │
+├── software/                          # Raspberry Pi vision code
 │   └── RaspberryPi/
-│       │
-│       └── ball_tracking.py
+│       └── ball_tracker.py
 │
+├── tests/                             # Hardware/firmware/vision validation
+│   ├── uart_test/
+│   ├── encoder_test/
+│   └── motor_test/
 │
-│
-│
-└── tests/                            # Hardware/software validation tests
-    │
-    ├── uart_test/
-    │   └── uart_test.py
-    │
-    ├── encoder_test/
-    │   └── encoder_test.c
-    │
-    └── motor_test/
-        └── motor_test.c
+└── docs/
+    └── images/                        # Schematic screenshots, PCB renders
 ```
 
 ## Getting Started
 
 ### Hardware
-1. Open `Ball_Tracking_Robot_Controller.kicad_pro` in [KiCad 9](https://www.kicad.org/).
-2. Review schematics/PCB layout, generate Gerbers/BOM for fabrication and assembly.
+1. Open `hardware/PCB/KiCad/Ball_Tracking_Robot_Controller.kicad_pro` in [KiCad 9](https://www.kicad.org/).
+2. Review the schematics/PCB layout, then generate Gerbers/BOM for fabrication and assembly.
 
 ### Firmware
-1. Import the `firmware/` sources into an STM32CubeIDE project targeting the STM32G431CBTx.
+1. Open `firmware/STM32CubeIDE` directly as a project in STM32CubeIDE (targets the STM32G431CBTx).
 2. Flash over the onboard SWD header with an ST-Link.
 3. Connect USART2 (PA2/PA3) to the Raspberry Pi's UART pins.
 
 ### Vision
-1. On the Raspberry Pi, install dependencies and run `vision/ball_tracker.py` (see the Vision section above for setup details).
+1. On the Raspberry Pi, install dependencies and run `software/RaspberryPi/ball_tracker.py` (see the [Vision](#vision-raspberry-pi-python) section above for setup details).
 
 ## Testing
 
-### Hardware Tests
+Validation performed during hardware/firmware bring-up:
 
-- 3.3V and 5V rail verification
-- UART communication test
-- Motor driver test
-- Encoder direction/count test
-- Ultrasonic ranging validation
+- **Hardware:** 3.3V/5V rail verification, UART loopback test, motor driver output check, encoder direction/count check, ultrasonic ranging accuracy check
+- **Firmware:** PID step-response tuning, encoder speed measurement validation, UART-disconnect failsafe test (confirms motors stop within 500 ms of link loss)
+- **Vision:** red-ball detection under varying lighting conditions, ball-loss/recovery behavior, end-to-end command latency
 
-### Firmware Tests
-
-- PID response testing
-- Encoder speed measurement validation
-- UART disconnect failsafe test
-
-### Vision Tests
-
-- Red ball detection under different lighting
-- Ball loss recovery
-- Camera latency testing
 ## Future Improvements
 
-- Replace single-character UART commands with packet-based communication
-- Add CRC error checking
-- Add IMU for orientation estimation
-- Implement autonomous navigation
+- Replace single-character UART commands with a packet-based protocol (with CRC error checking)
+- Add an IMU for orientation estimation
 - Add wheel odometry and localization
-- Tune PID gains automatically
+- Move from manual PID tuning toward autonomous/self-tuning gains
+- Full autonomous navigation (beyond ball-following)
