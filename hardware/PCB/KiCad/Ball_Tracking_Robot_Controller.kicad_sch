@@ -1,0 +1,1329 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "ea1c1202-681e-49bc-9569-ec750ad43197")
+	(paper "A4")
+	(title_block
+		(title "Ball Tracking Robot Controller")
+		(date "7/14/26")
+		(rev "v1.0")
+	)
+	(lib_symbols)
+	(junction
+		(at 143.51 124.46)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3f6b69bf-39de-49b3-bb0a-c4fd5acfeba0")
+	)
+	(junction
+		(at 143.51 77.47)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5c8ef99e-b4fa-4623-bfe4-385de697e934")
+	)
+	(junction
+		(at 139.7 81.28)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6f0b6247-4f99-4e60-b251-ec2f76bfdd09")
+	)
+	(junction
+		(at 143.51 49.53)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c5851af6-1d7f-46f3-a36c-1587ca84fc51")
+	)
+	(wire
+		(pts
+			(xy 143.51 49.53) (xy 152.4 49.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "04626ba2-8ec8-4c0f-b9f4-6476f9baee1d")
+	)
+	(wire
+		(pts
+			(xy 167.64 30.48) (xy 167.64 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "05910487-b2a7-4bec-8804-fc3be730ecc8")
+	)
+	(wire
+		(pts
+			(xy 73.66 121.92) (xy 81.28 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "061fecbc-fbf1-412a-9795-85ceb03c5d5f")
+	)
+	(wire
+		(pts
+			(xy 135.89 53.34) (xy 139.7 53.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "097a1c95-2f0e-45be-aa1a-32a06b1ac22d")
+	)
+	(wire
+		(pts
+			(xy 76.2 133.35) (xy 81.28 133.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0c94295e-381e-4482-a509-811ead9aac05")
+	)
+	(wire
+		(pts
+			(xy 143.51 77.47) (xy 143.51 49.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0ccff472-e863-4a52-95a6-57e478b1e2e6")
+	)
+	(wire
+		(pts
+			(xy 207.01 50.8) (xy 212.09 50.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0ebc3cd4-2d69-4b16-b04e-1e67d6cb8533")
+	)
+	(wire
+		(pts
+			(xy 135.89 120.65) (xy 139.7 120.65)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "10206a40-80c1-433f-b1d1-b108b658cdbf")
+	)
+	(wire
+		(pts
+			(xy 182.88 66.04) (xy 182.88 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "12355f19-04f5-47eb-abee-8432a9c393c8")
+	)
+	(wire
+		(pts
+			(xy 167.64 22.86) (xy 73.66 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "170c0f41-b151-4330-877e-e84e4e83f9b8")
+	)
+	(wire
+		(pts
+			(xy 160.02 27.94) (xy 78.74 27.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1bda8fdf-b1b2-4260-92de-b397987b02aa")
+	)
+	(wire
+		(pts
+			(xy 152.4 77.47) (xy 143.51 77.47)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1c297a90-1c6c-46f4-b957-7437832f946c")
+	)
+	(wire
+		(pts
+			(xy 175.26 66.04) (xy 175.26 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1dedfc25-9268-45a6-8693-cbf27bad7379")
+	)
+	(wire
+		(pts
+			(xy 214.63 130.81) (xy 214.63 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "235911bf-36a0-40be-841d-62b753808121")
+	)
+	(wire
+		(pts
+			(xy 132.08 156.21) (xy 132.08 152.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2795dcf9-0266-403e-8280-3015295bbdb3")
+	)
+	(wire
+		(pts
+			(xy 207.01 130.81) (xy 214.63 130.81)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "279a0636-444a-49dd-b69d-2d75784331ee")
+	)
+	(wire
+		(pts
+			(xy 73.66 22.86) (xy 73.66 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2f2ffd09-fb6c-494a-bd75-a5ec2249ecf1")
+	)
+	(wire
+		(pts
+			(xy 209.55 54.61) (xy 207.01 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3afab4b5-3a2f-47cc-80d9-a2c962ccc3e2")
+	)
+	(wire
+		(pts
+			(xy 139.7 81.28) (xy 152.4 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3bb584b9-abce-44a3-8f08-63e6d407abf8")
+	)
+	(wire
+		(pts
+			(xy 127 69.85) (xy 147.32 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3bcb4c04-d5fa-4b44-ab4e-f8561151575e")
+	)
+	(wire
+		(pts
+			(xy 171.45 30.48) (xy 171.45 20.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "50de32b5-6ec3-4379-a6b2-d78beac0ebd8")
+	)
+	(wire
+		(pts
+			(xy 132.08 73.66) (xy 132.08 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "53950f5b-8d8e-49c7-a5ee-7c9ff8fcdf90")
+	)
+	(wire
+		(pts
+			(xy 149.86 60.96) (xy 152.4 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "55745856-8ce8-41b6-9cf0-22c09b4f5afd")
+	)
+	(wire
+		(pts
+			(xy 207.01 35.56) (xy 222.25 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "579b28ce-9000-4232-8014-2a3e34aedace")
+	)
+	(wire
+		(pts
+			(xy 127 73.66) (xy 127 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "594811b3-e056-4f73-a0b1-f28d9d54bf07")
+	)
+	(wire
+		(pts
+			(xy 212.09 50.8) (xy 212.09 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5eff287c-d3e7-45b6-b4ed-7d7f7ed76126")
+	)
+	(wire
+		(pts
+			(xy 160.02 30.48) (xy 160.02 27.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5f41dedc-423b-4692-ac7d-7a579bc5e0d5")
+	)
+	(wire
+		(pts
+			(xy 171.45 20.32) (xy 71.12 20.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "63dadaec-aa12-45eb-bf22-d2fb0918546a")
+	)
+	(wire
+		(pts
+			(xy 219.71 39.37) (xy 207.01 39.37)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "682ca3e1-246a-4fab-b35a-2b3d4dfe654d")
+	)
+	(wire
+		(pts
+			(xy 212.09 127) (xy 207.01 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6a22fe18-8c41-4307-ac68-963b6e2d0040")
+	)
+	(wire
+		(pts
+			(xy 163.83 25.4) (xy 76.2 25.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6bdc6530-5575-456d-9b26-93fc357e2f35")
+	)
+	(wire
+		(pts
+			(xy 190.5 66.04) (xy 190.5 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "738ba2da-e255-4e24-bab3-2575e995d7aa")
+	)
+	(wire
+		(pts
+			(xy 222.25 35.56) (xy 222.25 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7737a63a-56ee-48d8-807f-78c1172209fc")
+	)
+	(wire
+		(pts
+			(xy 139.7 53.34) (xy 139.7 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "80121282-012e-4343-bdce-f1a0cae7fe22")
+	)
+	(wire
+		(pts
+			(xy 219.71 156.21) (xy 219.71 39.37)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8389bd51-e368-443f-bb2e-2ec1eca5699f")
+	)
+	(wire
+		(pts
+			(xy 194.31 66.04) (xy 194.31 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "84840d49-9643-4509-8e51-92a4626fab56")
+	)
+	(wire
+		(pts
+			(xy 78.74 27.94) (xy 78.74 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8fcfc8fb-f673-4f33-8244-7352ab2416aa")
+	)
+	(wire
+		(pts
+			(xy 209.55 123.19) (xy 209.55 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "95769a58-132f-4ae8-9833-c80a398874fb")
+	)
+	(wire
+		(pts
+			(xy 78.74 129.54) (xy 81.28 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9b1eda76-acb2-4ddd-a28b-86799c46d58f")
+	)
+	(wire
+		(pts
+			(xy 149.86 72.39) (xy 149.86 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a3c45606-cdeb-45b6-b615-faff0beec204")
+	)
+	(wire
+		(pts
+			(xy 163.83 30.48) (xy 163.83 25.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ab242de7-27a0-4a8d-860d-dc1cbd32df36")
+	)
+	(wire
+		(pts
+			(xy 147.32 57.15) (xy 152.4 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b0647322-cd2e-4f69-a96f-ed0f327d4051")
+	)
+	(wire
+		(pts
+			(xy 179.07 66.04) (xy 179.07 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b93f17f4-a81e-467d-a4b1-ceeffc25e692")
+	)
+	(wire
+		(pts
+			(xy 207.01 123.19) (xy 209.55 123.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ba95488f-75f3-4805-b1f5-7c3a437f3e64")
+	)
+	(wire
+		(pts
+			(xy 186.69 66.04) (xy 186.69 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bc344c3f-03fa-4948-a9a7-38291612b3cd")
+	)
+	(wire
+		(pts
+			(xy 71.12 125.73) (xy 81.28 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c1412f1e-328c-42bf-816e-6c4eb8e78544")
+	)
+	(wire
+		(pts
+			(xy 135.89 124.46) (xy 143.51 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c1e8ec1f-9c1f-475f-968e-3aba5bf7ae4a")
+	)
+	(wire
+		(pts
+			(xy 222.25 160.02) (xy 128.27 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c62cdf95-52fa-415c-8325-3987020f6b97")
+	)
+	(wire
+		(pts
+			(xy 152.4 124.46) (xy 143.51 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d0423147-c36c-4218-8649-03dadc3dccdf")
+	)
+	(wire
+		(pts
+			(xy 76.2 25.4) (xy 76.2 133.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d6f9a21a-5b9d-4311-b700-3e9b017b0c93")
+	)
+	(wire
+		(pts
+			(xy 135.89 49.53) (xy 143.51 49.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e3544cdb-088b-4b72-bdb8-ff6db3e3a67f")
+	)
+	(wire
+		(pts
+			(xy 71.12 20.32) (xy 71.12 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e997566c-ee88-4caf-91fc-39fc7522b077")
+	)
+	(wire
+		(pts
+			(xy 128.27 152.4) (xy 128.27 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e99c5648-0e42-45eb-a377-5322c186b215")
+	)
+	(wire
+		(pts
+			(xy 139.7 120.65) (xy 139.7 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eae4a3e6-50cb-4b37-9e6b-9b8b0218d7b2")
+	)
+	(wire
+		(pts
+			(xy 147.32 69.85) (xy 147.32 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ecad4e5d-1656-4a16-b007-e43130d95c2d")
+	)
+	(wire
+		(pts
+			(xy 214.63 46.99) (xy 207.01 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eec95b37-f813-47ff-85c7-4bd63f922bd1")
+	)
+	(wire
+		(pts
+			(xy 132.08 156.21) (xy 219.71 156.21)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fab73f64-6d28-4f89-81bc-8f0ea1e9acb4")
+	)
+	(wire
+		(pts
+			(xy 132.08 72.39) (xy 149.86 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fb363825-021c-4208-a454-1882c5ed6435")
+	)
+	(wire
+		(pts
+			(xy 143.51 124.46) (xy 143.51 77.47)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fc31db84-3d74-4503-9357-e250e167ba80")
+	)
+	(wire
+		(pts
+			(xy 198.12 66.04) (xy 198.12 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fc580c36-ba34-42a9-9cad-a1639206e254")
+	)
+	(sheet
+		(at 81.28 30.48)
+		(size 54.61 35.56)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "27f57927-224d-444a-b20c-01cf72f86ac0")
+		(property "Sheetname" "Power"
+			(at 97.282 50.8 0)
+			(effects
+				(font
+					(size 5.08 5.08)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Power.kicad_sch"
+			(at 81.28 66.6246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "3V3" input
+			(at 135.89 49.53 0)
+			(uuid "2cd0709c-d10c-4b74-9f06-c6b12d7be86e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "5V" input
+			(at 135.89 53.34 0)
+			(uuid "17236423-c20e-44d4-bbfa-5c7c4fa1b1b6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Ball_Tracking_Robot_Controller"
+				(path "/ea1c1202-681e-49bc-9569-ec750ad43197"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 152.4 30.48)
+		(size 54.61 35.56)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "5429a1ba-0231-4f74-a755-5f6a52bc52e0")
+		(property "Sheetname" "STM32"
+			(at 167.894 51.308 0)
+			(effects
+				(font
+					(size 5.08 5.08)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "STM32.kicad_sch"
+			(at 152.4 66.6246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "3V3" input
+			(at 152.4 49.53 180)
+			(uuid "03a12be2-d462-4a5b-8755-eccfd716da50")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "AIN1" input
+			(at 175.26 66.04 270)
+			(uuid "c8fa235a-4b0e-4a81-a968-5c6f4a4c43ad")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "AIN2" input
+			(at 179.07 66.04 270)
+			(uuid "f9a99d4a-68fb-4999-b720-0077ac554d86")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "BIN1" input
+			(at 182.88 66.04 270)
+			(uuid "df98e9aa-4e90-4f52-8ad1-d233f52e2071")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "BIN2" input
+			(at 186.69 66.04 270)
+			(uuid "7c843cd7-01c3-40ab-a5b5-508e27768ea5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "PWMA" input
+			(at 190.5 66.04 270)
+			(uuid "c4f626da-86ba-4e3a-963c-b729fd355d37")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "PWMB" input
+			(at 194.31 66.04 270)
+			(uuid "6f570855-2dc8-48be-b12b-9300afa73128")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "STBY" input
+			(at 198.12 66.04 270)
+			(uuid "27d9a344-c8e6-424d-a87b-73cf150013cf")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "UART_RX" input
+			(at 152.4 60.96 180)
+			(uuid "7e11d9c1-2229-481e-be31-2d87279da6f5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "UART_TX" input
+			(at 152.4 57.15 180)
+			(uuid "8737d59c-a7de-4a6d-9cbf-81bf07bdb4b0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ULTRASONIC_ECHO" input
+			(at 207.01 39.37 0)
+			(uuid "109bbcd8-3d91-45e4-9824-5e7d1fc6956c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "ULTRASONIC_TRIG" input
+			(at 207.01 35.56 0)
+			(uuid "b6eaf5b7-21c8-4f85-ba0e-c15dcbc52d30")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "NRST" input
+			(at 207.01 46.99 0)
+			(uuid "a6635cd5-2c6a-41a4-bd35-89eb593e31f3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SWCLK" input
+			(at 207.01 54.61 0)
+			(uuid "f11c8353-60f4-434f-9cd7-65dac5b09c68")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SWDIO" input
+			(at 207.01 50.8 0)
+			(uuid "24ed495b-e3b0-40ed-9d10-07a24ebf6f2f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "ENC_R_A" input
+			(at 160.02 30.48 90)
+			(uuid "8fac3e9a-cfb9-41cd-a370-095cc8e9e5ba")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "ENC_R_B" input
+			(at 163.83 30.48 90)
+			(uuid "8fd5d80c-bb81-423a-b948-47e1288b5ac9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "ENC_L_A" input
+			(at 167.64 30.48 90)
+			(uuid "7bc63bc5-30e2-4f22-9e9d-3ad9b5ebda1e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "ENC_L_B" input
+			(at 171.45 30.48 90)
+			(uuid "747104d1-197c-4d6c-8a11-18617fd0a0d1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Ball_Tracking_Robot_Controller"
+				(path "/ea1c1202-681e-49bc-9569-ec750ad43197"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 152.4 116.84)
+		(size 54.61 34.29)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "5b55d86f-2f39-4e62-b783-cd2653cf8afe")
+		(property "Sheetname" "Debug"
+			(at 167.894 136.144 0)
+			(effects
+				(font
+					(size 5.08 5.08)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Debug.kicad_sch"
+			(at 152.4 151.7146 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "3V3" input
+			(at 152.4 124.46 180)
+			(uuid "3f063480-9589-49bc-9939-2674c1a91c86")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "NRST" input
+			(at 207.01 130.81 0)
+			(uuid "afb1be96-c11f-4978-bbdc-16a98fbfb2e8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SWCLK" input
+			(at 207.01 123.19 0)
+			(uuid "1758d826-6283-44e1-853e-c34cc15ae0a6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SWDIO" input
+			(at 207.01 127 0)
+			(uuid "e740b12e-db31-4795-a294-dca71b67a305")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Ball_Tracking_Robot_Controller"
+				(path "/ea1c1202-681e-49bc-9569-ec750ad43197"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 152.4 73.66)
+		(size 54.61 35.56)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "7abf0487-ad7c-41d6-9e57-9205b06fac66")
+		(property "Sheetname" "Motor Driver"
+			(at 155.448 94.234 0)
+			(effects
+				(font
+					(size 5.08 5.08)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "MotorDriver.kicad_sch"
+			(at 152.4 109.8046 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "3V3" input
+			(at 152.4 77.47 180)
+			(uuid "e3ef68e1-95d8-47a5-b249-0c8a411b4106")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "AIN1" input
+			(at 175.26 73.66 90)
+			(uuid "b026e01b-5c86-46cd-ba8a-f33211e3fcd2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "AIN2" input
+			(at 179.07 73.66 90)
+			(uuid "8fc3655d-6c94-463c-af01-d710d3a21bb5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BIN1" input
+			(at 182.88 73.66 90)
+			(uuid "968c2621-24ae-4a80-8c2c-a812a0763cf7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BIN2" input
+			(at 186.69 73.66 90)
+			(uuid "fff27aa7-b46c-4612-bf53-77e2b11e527d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "PWMA" input
+			(at 190.5 73.66 90)
+			(uuid "4c530342-0024-41dc-a11d-2939d7931a1a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "PWMB" input
+			(at 194.31 73.66 90)
+			(uuid "c2eb9e30-54e1-41ee-a046-e839b5b3494b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "STBY" input
+			(at 198.12 73.66 90)
+			(uuid "5120864e-b7f4-40b0-a005-7905dc206ef7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "5V" input
+			(at 152.4 81.28 180)
+			(uuid "fc5c026a-7079-4744-97fd-e2cd2835abdf")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "Ball_Tracking_Robot_Controller"
+				(path "/ea1c1202-681e-49bc-9569-ec750ad43197"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 81.28 116.84)
+		(size 54.61 35.56)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "b66e3bef-0260-4fa6-9c06-6153058d7e71")
+		(property "Sheetname" "Sensors"
+			(at 93.98 136.652 0)
+			(effects
+				(font
+					(size 5.08 5.08)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Sensors.kicad_sch"
+			(at 81.28 152.9846 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "5V" input
+			(at 135.89 120.65 0)
+			(uuid "411ed3f7-5f9d-420e-bd78-ceac724f581e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "ULTRASONIC_ECHO" input
+			(at 132.08 152.4 270)
+			(uuid "b7c3b3a8-17e0-4b84-97aa-92348761a4d9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ULTRASONIC_TRIG" input
+			(at 128.27 152.4 270)
+			(uuid "43c028c7-36e1-41a8-be9c-2f454cc59814")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "3V3" input
+			(at 135.89 124.46 0)
+			(uuid "d694d078-9c47-4f5c-a958-0c9c32c9fd17")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "ENC_L_A" input
+			(at 81.28 121.92 180)
+			(uuid "236fce1b-0259-449c-8d06-d2364c256b59")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ENC_L_B" input
+			(at 81.28 125.73 180)
+			(uuid "88d1d6ed-c346-4317-b571-0dcc4f1009fe")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ENC_R_A" input
+			(at 81.28 129.54 180)
+			(uuid "96e8d683-b970-489c-9b94-ab466efa42e3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ENC_R_B" input
+			(at 81.28 133.35 180)
+			(uuid "b3a3d814-eeeb-468b-8995-fa07e9a708d9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "Ball_Tracking_Robot_Controller"
+				(path "/ea1c1202-681e-49bc-9569-ec750ad43197"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 81.28 73.66)
+		(size 54.61 35.56)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "e21832e6-5a3a-42ef-84b3-bd3cf76104e9")
+		(property "Sheetname" "Raspberry Pi"
+			(at 83.566 93.98 0)
+			(effects
+				(font
+					(size 5.08 5.08)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "RaspberryPi.kicad_sch"
+			(at 81.28 109.8046 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "UART_RX" input
+			(at 132.08 73.66 90)
+			(uuid "a6824d90-8964-4fa1-a029-2721559e9c6a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "UART_TX" input
+			(at 127 73.66 90)
+			(uuid "a4f800ab-b8b9-46c7-b8d0-b4a8ef127e12")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Ball_Tracking_Robot_Controller"
+				(path "/ea1c1202-681e-49bc-9569-ec750ad43197"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
