@@ -6,7 +6,7 @@ I designed the controller PCB from scratch in KiCad and wrote the embedded firmw
 
 **Skills demonstrated:** PCB design (KiCad) · embedded C / STM32 HAL · real-time control loops (PID) · analog/digital circuit design (power regulation, signal protection) · computer vision (OpenCV) · serial communication protocol design
 
-[![Youtube Video]()](https://www.youtube.com/watch?v=hujjT9JRrLc)
+https://github.com/user-attachments/assets/ed4e9871-f768-4ec5-b8f6-aebbd3194bc8
 
 ## Table of Contents
 
