@@ -1,6 +1,4 @@
 # Autonomous Ball Tracking Robot
-<iframe width="560" height="315" src="[https://www.youtube.com/embed/voiXY7UIDs4?si=4QDkKcrVznKKJuAn](https://youtu.be/hujjT9JRrLc)" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
 
 A two-wheeled robot that visually tracks and follows a red ball. A Raspberry Pi handles vision (Picamera2 + OpenCV) and sends drive commands over UART to a custom STM32-based motor controller PCB, which closes the loop with encoder feedback and PID.
 
