@@ -1,12 +1,12 @@
 # Autonomous Ball Tracking Robot
 
-<iframe width="560" height="315" src="https://youtu.be/hujjT9JRrLc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 A two-wheeled robot that visually tracks and follows a red ball. A Raspberry Pi handles vision (Picamera2 + OpenCV) and sends drive commands over UART to a custom STM32-based motor controller PCB, which closes the loop with encoder feedback and PID.
 
 I designed the controller PCB from scratch in KiCad and wrote the embedded firmware in C (STM32CubeIDE, HAL).
 
 **Skills demonstrated:** PCB design (KiCad) · embedded C / STM32 HAL · real-time control loops (PID) · analog/digital circuit design (power regulation, signal protection) · computer vision (OpenCV) · serial communication protocol design
+
+<video src="docs/videos/ball-tracking-video.mp4" width="320" height="240" controls></video>
 
 ## Table of Contents
 
