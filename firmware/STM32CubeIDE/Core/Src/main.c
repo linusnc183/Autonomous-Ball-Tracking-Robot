@@ -35,8 +35,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define CONTROL_LOOP_PERIOD_MS   20   /* 50Hz motor/encoder/PID loop */
-#define ULTRASONIC_PERIOD_MS     100  /* 10Hz - it's a blocking read, keep it slow */
+#define CONTROL_LOOP_PERIOD_MS   20   // 50Hz
+#define ULTRASONIC_PERIOD_MS     100  // 10Hz, blocking read
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -55,10 +55,8 @@ UART_HandleTypeDef huart2;
 PID_t left_pid;
 PID_t right_pid;
 
-
 float target_left = 0;
 float target_right = 0;
-
 
 uint32_t last_control_time = 0;
 /* USER CODE END PV */
@@ -113,58 +111,23 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-  /* Start PWM */
 
-  HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
 
+  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
 
-  /* Start encoder timers */
+  HAL_GPIO_WritePin(GPIOB, STBY_Pin, GPIO_PIN_SET);  // enable motor driver
 
-  HAL_TIM_Encoder_Start(&htim3,TIM_CHANNEL_ALL);
-  HAL_TIM_Encoder_Start(&htim4,TIM_CHANNEL_ALL);
-
-
-  /* Enable motor driver */
-
-  HAL_GPIO_WritePin(
-      GPIOA,
-      STBY_Pin,
-      GPIO_PIN_SET
-  );
-
-
-  /* PID setup.
-   * NOTE: switching the encoders to TIM_ENCODERMODE_TI12 (see
-   * MX_TIM3_Init/MX_TIM4_Init) means the same physical wheel speed now
-   * produces ~4x the counts/sec it did before. Both these gains and the
-   * target_left/target_right values set in uart_controller.c were
-   * written against the old resolution and will likely need re-tuning
-   * on the real robot - start by driving 'F' and watching the actual
-   * PWM/speed behavior before trusting these numbers. */
-
-  PID_Init(
-      &left_pid,
-      2.0,
-      0.1,
-      0.01
-  );
-
-
-  PID_Init(
-      &right_pid,
-      2.0,
-      0.1,
-      0.01
-  );
-
+  // gains are a starting point, tune on real hardware
+  PID_Init(&left_pid, 2.0, 0.1, 0.01);
+  PID_Init(&right_pid, 2.0, 0.1, 0.01);
 
   UART_Init();
-
   Ultrasonic_Init();
 
   last_control_time = HAL_GetTick();
-
   uint32_t last_ultrasonic_time = HAL_GetTick();
 
   /* USER CODE END 2 */
@@ -175,10 +138,6 @@ int main(void)
   {
     uint32_t now = HAL_GetTick();
 
-    /* Motor control loop: read encoders, run PID, drive motors.
-     * This is the piece that was completely missing before - nothing
-     * previously called Encoder_Update/PID_Update/Motor_Left/Motor_Right,
-     * so the robot would never actually respond to UART commands. */
     if ((now - last_control_time) >= CONTROL_LOOP_PERIOD_MS)
     {
       float dt = (now - last_control_time) / 1000.0f;
@@ -186,42 +145,22 @@ int main(void)
 
       Encoder_Update(dt);
 
-      float left_output = PID_Update(
-          &left_pid,
-          target_left,
-          Encoder_GetLeftSpeed(),
-          dt);
-
-      float right_output = PID_Update(
-          &right_pid,
-          target_right,
-          Encoder_GetRightSpeed(),
-          dt);
+      float left_output = PID_Update(&left_pid, target_left,
+                                      Encoder_GetLeftSpeed(), dt);
+      float right_output = PID_Update(&right_pid, target_right,
+                                       Encoder_GetRightSpeed(), dt);
 
       Motor_Left((int16_t)left_output);
       Motor_Right((int16_t)right_output);
 
-      /* Stops the motors if the Pi hasn't sent a command recently */
       UART_Update();
     }
 
-    /* Ultrasonic is a blocking read (up to ~30ms worst case), so it
-     * runs on its own slower cadence rather than every control loop
-     * iteration, to avoid stalling the PID timing. */
+    // ultrasonic runs slower than the control loop since it's a blocking read
     if ((now - last_ultrasonic_time) >= ULTRASONIC_PERIOD_MS)
     {
       last_ultrasonic_time = now;
       Ultrasonic_Update();
-      /* Ultrasonic_GetDistanceCm() is available here if you want to
-       * add obstacle-based safety stops, e.g.:
-       *   if (Ultrasonic_GetDistanceCm() > 0 &&
-       *       Ultrasonic_GetDistanceCm() < 10 &&
-       *       target_left > 0 && target_right > 0)
-       *   {
-       *       target_left = 0;
-       *       target_right = 0;
-       *   }
-       */
     }
 
     /* USER CODE END WHILE */
@@ -377,17 +316,10 @@ static void MX_TIM3_Init(void)
   htim3.Init.Period = 65535;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  /* TI12 counts on both channels/both edges = full quadrature decoding,
-   * 4x the resolution of the original TI1-only mode, and gives a more
-   * reliable direction reading. */
   sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
   sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
   sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
   sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
-  /* Light digital filter: TI12 mode counts every edge on both channels,
-   * which makes it more sensitive to electrical noise from the motors
-   * than the original single-edge mode was. 4 -> filtered at fDTS/2,
-   * N=6 samples; raise this if you still see jumpy speed readings. */
   sConfig.IC1Filter = 4;
   sConfig.IC2Polarity = TIM_ICPOLARITY_RISING;
   sConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;
