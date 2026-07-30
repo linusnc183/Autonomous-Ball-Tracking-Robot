@@ -6,7 +6,7 @@ I designed the controller PCB from scratch in KiCad and wrote the embedded firmw
 
 **Skills demonstrated:** PCB design (KiCad) · embedded C / STM32 HAL · real-time control loops (PID) · analog/digital circuit design (power regulation, signal protection) · computer vision (OpenCV) · serial communication protocol design
 
-<video src="docs/videos/ball-tracking-video.mp4" width="320" height="240" controls></video>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hujjT9JRrLc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Table of Contents
 
